@@ -13,7 +13,7 @@ namespace GemspaceBlog.Controllers
     public class AdminController : Controller
     {
         public DbModels dbModels = new DbModels();
-        // GET: Admin
+        // GET: Admin/Index route
         public ActionResult Index()
         {
                 return View(dbModels.Posts.ToList());
