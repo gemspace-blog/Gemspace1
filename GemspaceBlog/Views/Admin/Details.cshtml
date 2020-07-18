@@ -1,0 +1,90 @@
+﻿@model GemspaceBlog.Models.Post
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Post</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShortDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShortDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LongDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LongDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Category)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReadTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReadTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Img1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Img1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Img1Path)
+        </dt>
+
+        <dd>
+            <img src="@Url.Content(Model.Img1Path)" height="100" width="100" />
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Img2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Img2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Img2Path)
+        </dt>
+
+        <dd>
+            <img src="@Url.Content(Model.Img2Path)" height="100" width="100" />
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
