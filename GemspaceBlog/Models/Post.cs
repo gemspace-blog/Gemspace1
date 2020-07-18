@@ -11,38 +11,21 @@ namespace GemspaceBlog.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.ComponentModel.DataAnnotations;
     using System.Web;
 
     public partial class Post
     {
         public int Id { get; set; }
-        [Required(ErrorMessage ="Title is required")]
         public string Title { get; set; }
-        [DisplayName("Short Description")]
-        [Required(ErrorMessage = "Short Description is required")]
         public string ShortDescription { get; set; }
-        [DisplayName("Long Description")]
-        [Required(ErrorMessage = "Long Description is required")]
         public string LongDescription { get; set; }
-        [Required(ErrorMessage = "Category is required")]
         public string Category { get; set; }
-        [DisplayName("Time To Read")]
-        [Required(ErrorMessage = "Time To Read is required")]
         public int ReadTime { get; set; }
-        [DisplayName("Image 1 Title")]
-        [Required(ErrorMessage = "Image 1 Title is required")]
         public string Img1 { get; set; }
-        [DisplayName("Upload 1st Image")]
         public string Img1Path { get; set; }
-        public HttpPostedFileBase Image1File { get; set; }
-        [DisplayName("Image 2 Title")]
-        [Required(ErrorMessage = "Image 2 Title is required")]
         public string Img2 { get; set; }
-        [DisplayName("Upload 2nd Image")]
         public string Img2Path { get; set; }
+        public HttpPostedFileBase Image1File { get; set; }
         public HttpPostedFileBase Image2File { get; set; }
     }
-
 }
