@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GemspaceBlog.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,6 +9,7 @@ namespace GemspaceBlog.Controllers
 {
     public class HomeController : Controller
     {
+        public DbModels dbModels = new DbModels();
         public ActionResult Index()
         {
             return View();

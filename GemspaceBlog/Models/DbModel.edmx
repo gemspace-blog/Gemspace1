@@ -18,10 +18,9 @@
     <Property Name="LongDescription" Type="varchar(max)" Nullable="false" />
     <Property Name="Category" Type="varchar" Nullable="false" MaxLength="50" />
     <Property Name="ReadTime" Type="int" Nullable="false" />
-    <Property Name="Img1" Type="varchar" Nullable="false" MaxLength="250" />
     <Property Name="Img1Path" Type="varchar(max)" Nullable="false" />
-    <Property Name="Img2" Type="varchar" Nullable="false" MaxLength="250" />
     <Property Name="Img2Path" Type="varchar(max)" Nullable="false" />
+    <Property Name="CreatedAt" Type="datetime" Nullable="false" />
   </EntityType>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -37,10 +36,9 @@
           <Property Name="LongDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ReadTime" Type="Int32" Nullable="false" />
-          <Property Name="Img1" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Img1Path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Img2" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Img2Path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" />
         </EntityType>
         <EntityContainer Name="DbModels" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Posts" EntityType="Self.Post" />
@@ -60,10 +58,9 @@
           <ScalarProperty Name="LongDescription" ColumnName="LongDescription" />
           <ScalarProperty Name="Category" ColumnName="Category" />
           <ScalarProperty Name="ReadTime" ColumnName="ReadTime" />
-          <ScalarProperty Name="Img1" ColumnName="Img1" />
           <ScalarProperty Name="Img1Path" ColumnName="Img1Path" />
-          <ScalarProperty Name="Img2" ColumnName="Img2" />
           <ScalarProperty Name="Img2Path" ColumnName="Img2Path" />
+          <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
