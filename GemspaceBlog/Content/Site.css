@@ -1,6 +1,11 @@
 ﻿/* Set padding to keep content from hitting the edges */
 html, body {
     font-family: 'Red Rose', cursive;
+    
+}
+
+main {
+    min-height: calc(100vh - 67px);
 }
 
 header {
@@ -56,7 +61,7 @@ nav > div:after {
     position: absolute;
     top: 0;
     left: 0;
-    background-color: rgba(0,0,0,.3);
+    background-color: rgba(0,0,0,.55);
     z-index: 2;
 }
 

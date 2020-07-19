@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Net;
 
 namespace GemspaceBlog.Controllers
 {
@@ -15,17 +16,44 @@ namespace GemspaceBlog.Controllers
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult Basketball()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
-        public ActionResult Contact()
+        public ActionResult Food()
         {
-            ViewBag.Message = "Your contact page.";
+            return View();
+        }
 
+        public ActionResult Nature()
+        {
+            return View();
+        }
+
+        public ActionResult Coding()
+        {
+            return View();
+        }
+
+        public ActionResult Article(int? id)
+        {
+            if(id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Post post = dbModels.Posts.Where(x => x.Id == id).FirstOrDefault();
+
+            if(post == null)
+            {
+                return HttpNotFound();
+            }
+            return View(post);
+        }
+
+        public ActionResult AboutMe()
+        {            
             return View();
         }
     }
