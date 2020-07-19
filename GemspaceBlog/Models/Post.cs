@@ -21,11 +21,8 @@ namespace GemspaceBlog.Models
         public string LongDescription { get; set; }
         public string Category { get; set; }
         public int ReadTime { get; set; }
-        public string Img1 { get; set; }
         public string Img1Path { get; set; }
-        public string Img2 { get; set; }
         public string Img2Path { get; set; }
-        public HttpPostedFileBase Image1File { get; set; }
-        public HttpPostedFileBase Image2File { get; set; }
+        public System.DateTime CreatedAt { get; set; }
     }
 }

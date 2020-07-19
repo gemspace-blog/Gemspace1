@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 07/18/2020 14:57:32
--- Generated from EDMX file: C:\Users\arlit\source\repos\Gemspace1\GemspaceBlog\Models\DbModel.edmx
+-- Date Created: 07/18/2020 23:18:43
+-- Generated from EDMX file: C:\Users\Pc\source\Github\Gemspace\GemspaceBlog\Models\DbModel.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -38,10 +38,9 @@ CREATE TABLE [dbo].[Posts] (
     [LongDescription] varchar(max)  NOT NULL,
     [Category] varchar(50)  NOT NULL,
     [ReadTime] int  NOT NULL,
-    [Img1] varchar(250)  NOT NULL,
     [Img1Path] varchar(max)  NOT NULL,
-    [Img2] varchar(250)  NOT NULL,
-    [Img2Path] varchar(max)  NOT NULL
+    [Img2Path] varchar(max)  NOT NULL,
+    [CreatedAt] datetime  NOT NULL
 );
 GO
 

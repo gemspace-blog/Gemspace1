@@ -1,12 +1,11 @@
 ﻿@model GemspaceBlog.Models.Post
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Details";
 }
 
-<h2>Delete</h2>
+<h2>Details</h2>
 
-<h3>Are you sure you want to delete this?</h3>
 <div>
     <h4>Post</h4>
     <hr />
@@ -52,27 +51,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Img1)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Img1)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.Img1Path)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Img1Path)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Img2)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Img2)
+            <img src="@Url.Content(Model.Img1Path)" height="100" width="100" />
         </dd>
 
         <dt>
@@ -80,17 +63,20 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Img2Path)
+           <img src="@Url.Content(Model.Img2Path)" height="100" width="100" />
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedAt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedAt)
         </dd>
 
     </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
-    }
 </div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
