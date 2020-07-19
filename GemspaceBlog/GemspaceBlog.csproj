@@ -133,6 +133,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\AllowedFileTypeValidator.cs" />
+    <Compile Include="Infrastructure\CategoryValidator.cs" />
+    <Compile Include="Infrastructure\MaxFileSizeValidator.cs" />
     <Compile Include="Models\DbModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

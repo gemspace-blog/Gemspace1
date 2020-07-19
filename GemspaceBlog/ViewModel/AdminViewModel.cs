@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GemspaceBlog.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -21,7 +22,8 @@ namespace GemspaceBlog.ViewModel
         public string LongDescription { get; set; }
         [DisplayName("Category")]
         [Required(ErrorMessage = "Category is required")]
-        public string Category { get; set; }
+        //[CategoryValidator]
+        public int Category { get; set; }
         [DisplayName("Time To Read")]
         [Required(ErrorMessage = "Time To Read is required")]
         public int ReadTime { get; set; }
@@ -31,7 +33,18 @@ namespace GemspaceBlog.ViewModel
         public string Img2Path { get; set; }
         [DisplayName("Created At")]
         public DateTime CreatedAt { get; set; }
+        [MaxFileSizeValidator(2* 1024 *1024)]
+        [AllowedFileTypeValidator(new string[] { ".jpg", ".png", ".jpeg" })]
         public HttpPostedFileBase Image1File { get; set; }
+        [MaxFileSizeValidator(2 * 1024 * 1024)]
+        [AllowedFileTypeValidator(new string[] { ".jpg", ".png", ".jpeg" })]
         public HttpPostedFileBase Image2File { get; set; }
+    }
+    public enum Category
+    {
+        Basketball = 1,
+        Nature = 2 ,
+        Food = 3,
+        Coding = 4
     }
 }
