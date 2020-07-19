@@ -5,23 +5,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
     <link href="https://fonts.googleapis.com/css2?family=Red+Rose&display=swap" rel="stylesheet">
+    <script src="~/js/main.js" defer></script>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
     <header>
+        <span class="menu-trigger">
+            <img src="~/globalimg/menu.svg" alt="GameSpace menu trigger icon" />
+        </span>
         <nav>
-
+            <div>
+                <img src="~/globalimg/basketball-wallpaper.jpg" alt="GameSpace basketball wallpaper" />
+                <div>
+                    <img src="~/globalimg/basketball.svg" alt="GameSpace basketball svg" />
+                    <h3>Basketball</h3>
+                </div>
+                <a href="#"></a>
+            </div>
+            <div>
+                <img src="~/globalimg/food-wallpaper.jpg" alt="GameSpace food wallpaper" />
+                <div>
+                    <img src="~/globalimg/food.svg" alt="GameSpace food svg" />
+                    <h3>Food</h3>
+                </div>
+                <a href="#"></a>
+            </div>
+            <div>
+                <img src="~/globalimg/nature-wallpaper.jpg" alt="GameSpace nature wallpaper" />
+                <div>
+                    <img src="~/globalimg/forest.svg" alt="GameSpace forest svg" />
+                    <h3>Nature</h3>
+                </div>
+                <a href="#"></a>
+            </div>
+            <div>
+                <img src="~/globalimg/coding-wallpaper.jpg" alt="GameSpace coding wallpaper" />
+                <div>
+                    <img src="~/globalimg/computer.svg" alt="GameSpace computer svg" />
+                    <h3>Coding</h3>
+                </div>
+                <a href="#"></a>
+            </div>
+            <img class="menu-closer" src="~/globalimg/back.svg" alt="GameSpace back icon" />
         </nav>
     </header>
     
     <main> 
         @RenderBody() 
     </main>
-       
-        <footer>
-            
-        </footer>
+    <footer class="w-100 position-relative">
+        <h6>Copyrights © GemSpace</h6>
+        <div>
+            <a href="#"><img src="~/globalimg/facebook.svg" alt="GameSpace facebook icon" /></a>
+            <a href="#"><img src="~/globalimg/instagram.svg" alt="GameSpace instagram icon" /></a>
+            <a href="#"><img src="~/globalimg/twitter.svg" alt="GameSpace twitter icon" /></a>
+        </div>
+    </footer>
 
 
     @Scripts.Render("~/bundles/jquery")

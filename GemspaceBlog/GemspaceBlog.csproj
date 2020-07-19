@@ -164,11 +164,26 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="globalimg\back.svg" />
+    <Content Include="globalimg\basketball-wallpaper.jpg" />
+    <Content Include="globalimg\basketball.svg" />
+    <Content Include="globalimg\coding-wallpaper.jpg" />
+    <Content Include="globalimg\computer.svg" />
+    <Content Include="globalimg\facebook.svg" />
+    <Content Include="globalimg\feather-logo.svg" />
     <Content Include="globalimg\feather.svg" />
+    <Content Include="globalimg\food-wallpaper.jpg" />
+    <Content Include="globalimg\food.svg" />
+    <Content Include="globalimg\forest.svg" />
+    <Content Include="globalimg\instagram.svg" />
     <Content Include="globalimg\main-svg.svg" />
     <Content Include="globalimg\main-wallpaper.jpg" />
+    <Content Include="globalimg\menu.svg" />
+    <Content Include="globalimg\nature-wallpaper.jpg" />
+    <Content Include="globalimg\twitter.svg" />
     <Content Include="globalimg\type-svg.svg" />
     <Content Include="globalimg\wave.svg" />
+    <Content Include="js\main.js" />
     <Content Include="Models\DbModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>DbModel.Context.cs</LastGenOutput>
