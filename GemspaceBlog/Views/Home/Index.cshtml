@@ -5,11 +5,13 @@
 
     <section class="main-header">
         <img class="header-wallpaper" src="~/globalimg/main-wallpaper.jpg" alt="gemspace blog wallpaper" />
-        <h1 class="blog-title">GemSpace</h1>
+        <div class="blog-title">
+            <img src="~/globalimg/feather-logo.svg" alt="gemspace blog svg logo" />
+            <h1>GemSpace</h1>
+        </div>
         <div class="entry-design d-flex flex-column align-items-center">
             <div class="w-100 index-nav">
                 <div class="logo">
-                    <img src="~/globalimg/feather.svg" alt="gemspace blog svg" />
                     <h5>GemSpace</h5>
                 </div>                
                 <div>
@@ -23,6 +25,26 @@
             <img class="wavy" src="~/globalimg/wave.svg" alt="gemspace blog wavy svg" />
         </div>
     </section>
+    <section class="home-categories w-100 position-relative">
+        <h2>Categories...</h2>
+        <div>
+            <a href="#">
+                <img src="~/globalimg/basketball.svg" alt="gemspace blog svg"/>
+                <h5>Basketball</h5>
+            </a>
+            <a href="#">
+                <img src="~/globalimg/food.svg" alt="gemspace blog svg" />
+                <h5>Food</h5></a>
+            <a href="#">
+                <img src="~/globalimg/forest.svg" alt="gemspace blog svg" />
+                <h5>Nature</h5>
+            </a>
+            <a href="#">
+                <img src="~/globalimg/computer.svg" alt="gemspace blog svg" />
+                <h5>Coding</h5>
+            </a>
+        </div>
+    </section>
     <section class="main-content">
         <article class="generated-content">
             @*need title short desc img 1*@
@@ -30,9 +52,9 @@
                 <img src="~/globalimg/main-wallpaper.jpg"> <!--image 1-->
             </div>
             <div class="generated-text">
-                <div>
+                <div class="w-100 d-flex justify-content-between flex-wrap">
                     <h2 class="generated-title">Titull Blog 1</h2><!--title-->
-                    <h4 class="generated-category"></h4><!--category-->
+                    <h5 class="generated-category">Basketball</h5><!--category-->
                 </div>
                 <p class="generated-shdesc">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit,
@@ -42,28 +64,7 @@
                     dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
                     sunt in culpa qui officia deserunt mollit anim id est laborum
                 </p><!--short desc-->
-            </div>
-
-
-        </article>
-        <article class="generated-content">
-            @*need title short desc img 1*@
-            <div class="generated-img">
-                <img src="~/globalimg/main-wallpaper.jpg"> <!--image 1-->
-            </div>
-            <div class="generated-text">
-                <div>
-                    <h2 class="generated-title">Titull Blog 1</h2><!--title-->
-                    <h4 class="generated-category"></h4><!--category-->
-                </div>
-                <p class="generated-shdesc">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                    veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-                    dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                    sunt in culpa qui officia deserunt mollit anim id est laborum
-                </p><!--short desc-->
+                <h6 class="text-right"style="color:rgba(200,200,200,1);margin:15px 0;">10/10/2020</h6>
             </div>
         </article>
     </section>
