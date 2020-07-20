@@ -19,10 +19,10 @@ namespace GemspaceBlog.Infrastructure
         object value, ValidationContext validationContext)
         {
             var file = value as HttpPostedFileBase;
-            var extension = Path.GetExtension(file.FileName);
             if (file != null)
             {
-                if (!_extensions.Contains(extension.ToLower()))
+                var extension = Path.GetExtension(file.FileName);
+                if (!_extensions.Contains(extension.ToLower()) && file.ContentLength > (2 * 1024 *1024))
                 {
                     return new ValidationResult(GetErrorMessage());
                 }
@@ -33,7 +33,7 @@ namespace GemspaceBlog.Infrastructure
 
         public string GetErrorMessage()
         {
-            return $"This photo extension is not allowed!";
+            return $"This file is not a photo or it's larger than 2MB";
         }
     }
 }

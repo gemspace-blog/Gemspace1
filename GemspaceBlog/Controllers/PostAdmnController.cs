@@ -65,6 +65,7 @@ namespace GemspaceBlog.Controllers
                 }
                 else
                 {
+                    TempData["msg"] = "Validation Failed";
                     return View();
                 }
 
@@ -90,9 +91,10 @@ namespace GemspaceBlog.Controllers
                 dbModels.Posts.Add(post);
                 dbModels.SaveChanges();
                 ModelState.Clear();
+                TempData["msg"] = "Post Created";
                 return RedirectToAction("Index", "PostAdmn");
             }
-                return View();
+            return View();
         }
 
         // GET: PostAdmn/Edit/5
@@ -104,82 +106,114 @@ namespace GemspaceBlog.Controllers
             }
 
             Post post = dbModels.Posts.Where(x => x.Id == id).FirstOrDefault();
-            TempData["img1Path"] = post.Img1Path;
-            TempData["img2Path"] = post.Img2Path;
-            TempData["datetime"] = post.CreatedAt;
-
-            AdminViewModel adminViewModel = new AdminViewModel();
-
-            adminViewModel.Id = post.Id;
-            adminViewModel.Title = post.Title;
-            adminViewModel.ShortDescription = post.ShortDescription;
-            adminViewModel.LongDescription = post.LongDescription;
-            adminViewModel.ReadTime = post.ReadTime;
-            adminViewModel.Img1Path = post.Img1Path;
-            adminViewModel.Img2Path = post.Img2Path;
-            adminViewModel.CreatedAt = post.CreatedAt;
-            
-            if (post.Category == "Basketball")
-            {
-                adminViewModel.Category = 1;
-            }
-            else if (post.Category == "Nature")
-            {
-                adminViewModel.Category = 2;
-            }
-            else if (post.Category == "Food")
-            {
-                adminViewModel.Category = 3;
-            }
-            else if (post.Category == "Coding")
-            {
-                adminViewModel.Category = 4;
-            }
 
             if (post == null)
             {
                 return HttpNotFound();
             }
-            return View(adminViewModel);
+
+            TempData["img1Path"] = post.Img1Path;
+            TempData["img2Path"] = post.Img2Path;
+            TempData["datetime"] = post.CreatedAt;
+
+            EditViewModel editViewModel = new EditViewModel();
+
+            editViewModel.Id = post.Id;
+            editViewModel.Title = post.Title;
+            editViewModel.ShortDescription = post.ShortDescription;
+            editViewModel.LongDescription = post.LongDescription;
+            editViewModel.ReadTime = post.ReadTime;
+            editViewModel.Img1Path = post.Img1Path;
+            editViewModel.Img2Path = post.Img2Path;
+            editViewModel.CreatedAt = post.CreatedAt;
+            
+            if (post.Category == "Basketball")
+            {
+                editViewModel.Category = 1;
+            }
+            else if (post.Category == "Nature")
+            {
+                editViewModel.Category = 2;
+            }
+            else if (post.Category == "Food")
+            {
+                editViewModel.Category = 3;
+            }
+            else if (post.Category == "Coding")
+            {
+                editViewModel.Category = 4;
+            }
+
+            ViewBag.editModel = editViewModel;
+            return View(editViewModel);
         }
 
         // POST: PostAdmn/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, AdminViewModel adminViewModel)
+        public ActionResult Edit(int id, EditViewModel editViewModel)
         {
+            Post tempPost = dbModels.Posts.Where(x => x.Id == id).FirstOrDefault();
+            EditViewModel editVMTemp = new EditViewModel
+            {
+                Id = tempPost.Id,
+                Title = tempPost.Title,
+                ShortDescription = tempPost.ShortDescription,
+                LongDescription = tempPost.LongDescription,
+                ReadTime = tempPost.ReadTime,
+                CreatedAt = tempPost.CreatedAt,
+                Img1Path = tempPost.Img1Path,
+                Img2Path = tempPost.Img2Path
+            };
+            if (tempPost.Category == "Basketball")
+            {
+                editVMTemp.Category = 1;
+            }
+            else if (tempPost.Category == "Nature")
+            {
+                editVMTemp.Category = 2;
+            }
+            else if (tempPost.Category == "Food")
+            {
+                editVMTemp.Category = 3;
+            }
+            else if (tempPost.Category == "Coding")
+            {
+                editVMTemp.Category = 4;
+            }
+
             if (ModelState.IsValid)
             {
                 Post post = new Post();
-                if (adminViewModel.Image1File == null && adminViewModel.Image2File == null)
+                if (editViewModel.Image1File == null && editViewModel.Image2File == null)
                 {
-                    post.Img1Path = TempData["img1Path"].ToString();
-                    post.Img2Path = TempData["img2Path"].ToString();
-                    post.CreatedAt = (DateTime)TempData["datetime"];
-                    post.Id = adminViewModel.Id;
-                    post.ShortDescription = adminViewModel.ShortDescription;
-                    post.Title = adminViewModel.Title;
-                    post.LongDescription = adminViewModel.LongDescription;
-                    if (adminViewModel.Category == 1)
+                    post.Img1Path = editVMTemp.Img1Path;
+                    post.Img2Path = editVMTemp.Img2Path;
+                    post.CreatedAt = editVMTemp.CreatedAt;
+                    post.Id = editViewModel.Id;
+                    post.ShortDescription = editViewModel.ShortDescription;
+                    post.Title = editViewModel.Title;
+                    post.LongDescription = editViewModel.LongDescription;
+                    post.ReadTime = editViewModel.ReadTime;
+                    if (editViewModel.Category == 1)
                     {
                         post.Category = "Basketball";
                     }
-                    else if (adminViewModel.Category == 2)
+                    else if (editViewModel.Category == 2)
                     {
                         post.Category = "Nature";
                     }
-                    else if (adminViewModel.Category == 3)
+                    else if (editViewModel.Category == 3)
                     {
                         post.Category = "Food";
                     }
-                    else if (adminViewModel.Category == 4)
+                    else if (editViewModel.Category == 4)
                     {
                         post.Category = "Coding";
                     }
                     else
                     {
-                        return View();
+                        return View(editVMTemp);
                     }
-                    post.ReadTime = adminViewModel.ReadTime;
 
                     dbModels.Entry(post).State = EntityState.Modified;
                     if (dbModels.SaveChanges() > 0)
@@ -196,142 +230,222 @@ namespace GemspaceBlog.Controllers
                     }
 
                 }
-                else if (adminViewModel.Image1File != null && adminViewModel.Image2File == null)
+                else if (editViewModel.Image1File != null && editViewModel.Image2File == null)
                 {
-                    string oldPath = Request.MapPath(TempData["img1Path"].ToString());
-                    post.Img1Path = SavePhoto(adminViewModel.Image1File);
-                    post.Img2Path = TempData["img2Path"].ToString();
-                    post.CreatedAt = (DateTime)TempData["datetime"];
-                    post.Id = adminViewModel.Id;
-                    post.ShortDescription = adminViewModel.ShortDescription;
-                    post.Title = adminViewModel.Title;
-                    post.LongDescription = adminViewModel.LongDescription;
-                    if (adminViewModel.Category == 1)
+                    string fileName1 = Path.GetFileName(editViewModel.Image1File.FileName);
+                    string _fileName1 = DateTime.Now.ToString("yymmssfff") + fileName1;
+
+                    string extension = Path.GetExtension(editViewModel.Image1File.FileName);
+
+                    string path = Path.Combine(Server.MapPath("~/Image/"), _fileName1);
+
+                    if (extension.ToLower() == ".jpg" || extension.ToLower() == ".jpeg" || extension.ToLower() == ".png")
                     {
-                        post.Category = "Basketball";
-                    }
-                    else if (adminViewModel.Category == 2)
-                    {
-                        post.Category = "Nature";
-                    }
-                    else if (adminViewModel.Category == 3)
-                    {
-                        post.Category = "Food";
-                    }
-                    else if (adminViewModel.Category == 4)
-                    {
-                        post.Category = "Coding";
+                        if (editViewModel.Image1File.ContentLength <= 2097152)
+                        {
+                            post.Img1Path = "~/Image/" + _fileName1;
+                            post.Img2Path = editVMTemp.Img2Path;
+                            post.CreatedAt = editVMTemp.CreatedAt;
+                            post.Id = editViewModel.Id;
+                            post.ShortDescription = editViewModel.ShortDescription;
+                            post.Title = editViewModel.Title;
+                            post.LongDescription = editViewModel.LongDescription;
+                            post.ReadTime = editViewModel.ReadTime;
+                            if (editViewModel.Category == 1)
+                            {
+                                post.Category = "Basketball";
+                            }
+                            else if (editViewModel.Category == 2)
+                            {
+                                post.Category = "Nature";
+                            }
+                            else if (editViewModel.Category == 3)
+                            {
+                                post.Category = "Food";
+                            }
+                            else if (editViewModel.Category == 4)
+                            {
+                                post.Category = "Coding";
+                            }
+                            else
+                            {
+                                return View(editVMTemp);
+                            }
+                            dbModels.Entry(post).State = EntityState.Modified;
+                            string oldImgPath1 = editVMTemp.Img1Path;
+
+                            if (dbModels.SaveChanges() > 0)
+                            {
+                                editViewModel.Image1File.SaveAs(path);
+                                if (System.IO.File.Exists(oldImgPath1))
+                                {
+                                    System.IO.File.Delete(oldImgPath1);
+                                }
+                                TempData["msg"] = "Data Updated";
+                                return RedirectToAction("Index");
+                            }
+                            
+                        }
+                        else
+                        {
+                            ViewBag.msg = "File Size must be Equal or less than 1MB";
+                        }
                     }
                     else
                     {
-                        return View();
-                    }
-                    post.ReadTime = adminViewModel.ReadTime;
-                    dbModels.Entry(post).State = EntityState.Modified;
-                    if (dbModels.SaveChanges() > 0)
-                    {
-                        if (System.IO.File.Exists(oldPath))
-                        {
-                            System.IO.File.Delete(oldPath);
-                        }
-                        TempData["msg"] = "Data Updated";
-                        return RedirectToAction("Index");
-
+                        ViewBag.msg = "Invalid File Type";
                     }
                 }
-                else if (adminViewModel.Image1File == null && adminViewModel.Image2File != null)
+                else if (editViewModel.Image1File == null && editViewModel.Image2File != null)
                 {
-                    post.Img1Path = TempData["img1Path"].ToString();
-                    post.Img2Path = SavePhoto(adminViewModel.Image2File);
-                    post.CreatedAt = (DateTime)TempData["datetime"];
-                    post.Id = adminViewModel.Id;
-                    post.ShortDescription = adminViewModel.ShortDescription;
-                    post.Title = adminViewModel.Title;
-                    post.LongDescription = adminViewModel.LongDescription;
-                    if (adminViewModel.Category == 1)
+                    string fileName2 = Path.GetFileName(editViewModel.Image2File.FileName);
+                    string _fileName2 = DateTime.Now.ToString("yymmssfff") + fileName2;
+
+                    string extension2 = Path.GetExtension(editViewModel.Image2File.FileName);
+
+                    string path2 = Path.Combine(Server.MapPath("~/Image/"), _fileName2);
+
+                    if (extension2.ToLower() == ".jpg" || extension2.ToLower() == ".jpeg" || extension2.ToLower() == ".png")
                     {
-                        post.Category = "Basketball";
-                    }
-                    else if (adminViewModel.Category == 2)
-                    {
-                        post.Category = "Nature";
-                    }
-                    else if (adminViewModel.Category == 3)
-                    {
-                        post.Category = "Food";
-                    }
-                    else if (adminViewModel.Category == 4)
-                    {
-                        post.Category = "Coding";
+                        if (editViewModel.Image2File.ContentLength <= 2097152)
+                        {
+
+                            post.Img2Path = "~/Image/" + _fileName2;
+                            post.Img1Path = editVMTemp.Img1Path;
+                            post.CreatedAt = editVMTemp.CreatedAt;
+                            post.Id = editViewModel.Id;
+                            post.ShortDescription = editViewModel.ShortDescription;
+                            post.Title = editViewModel.Title;
+                            post.LongDescription = editViewModel.LongDescription;
+                            post.ReadTime = editViewModel.ReadTime;
+                            if (editViewModel.Category == 1)
+                            {
+                                post.Category = "Basketball";
+                            }
+                            else if (editViewModel.Category == 2)
+                            {
+                                post.Category = "Nature";
+                            }
+                            else if (editViewModel.Category == 3)
+                            {
+                                post.Category = "Food";
+                            }
+                            else if (editViewModel.Category == 4)
+                            {
+                                post.Category = "Coding";
+                            }
+                            else
+                            {
+                                return View(editVMTemp);
+                            }
+                            dbModels.Entry(post).State = EntityState.Modified;
+                            string oldImgPath2 = editVMTemp.Img2Path;
+
+                            if (dbModels.SaveChanges() > 0)
+                            {
+                                editViewModel.Image2File.SaveAs(path2);
+                                if (System.IO.File.Exists(oldImgPath2))
+                                {
+                                    System.IO.File.Delete(oldImgPath2);
+                                }
+                                TempData["msg"] = "Data Updated";
+                                return RedirectToAction("Index");
+                            }
+                        }
+                        else
+                        {
+                            ViewBag.msg = "File Size must be Equal or less than 1MB";
+                        }
+
                     }
                     else
                     {
-                        return View();
-                    }
-                    post.ReadTime = adminViewModel.ReadTime;
-                    string oldPath = Request.MapPath(TempData["img2Path"].ToString());
-                    dbModels.Entry(post).State = EntityState.Modified;
-                    if (dbModels.SaveChanges() > 0)
-                    {
-                        if (System.IO.File.Exists(oldPath))
-                        {
-                            System.IO.File.Delete(oldPath);
-                        }
-                        TempData["msg"] = "Data Updated";
-                        return RedirectToAction("Index");
-
+                        ViewBag.msg = "Invalid File Type";
                     }
                 }
                 else
                 {
-                    post.Img1Path = SavePhoto(adminViewModel.Image1File);
-                    post.Img2Path = SavePhoto(adminViewModel.Image2File);
-                    post.CreatedAt = (DateTime)TempData["datetime"];
-                    post.Id = adminViewModel.Id;
-                    post.ShortDescription = adminViewModel.ShortDescription;
-                    post.Title = adminViewModel.Title;
-                    post.LongDescription = adminViewModel.LongDescription;
-                    if (adminViewModel.Category == 1)
+                    string fileName12 = Path.GetFileName(editViewModel.Image1File.FileName);
+                    string _fileName12 = DateTime.Now.ToString("yymmssfff") + fileName12;
+
+                    string extension12 = Path.GetExtension(editViewModel.Image1File.FileName);
+
+                    string path12 = Path.Combine(Server.MapPath("~/Image/"), _fileName12);
+
+                    string fileName22 = Path.GetFileName(editViewModel.Image2File.FileName);
+                    string _fileName22 = DateTime.Now.ToString("yymmssfff") + fileName22;
+
+                    string extension22 = Path.GetExtension(editViewModel.Image2File.FileName);
+
+                    string path22 = Path.Combine(Server.MapPath("~/Image/"), _fileName22);
+
+
+                    if ((extension12.ToLower() == ".jpg" || extension12.ToLower() == ".jpeg" || extension12.ToLower() == ".png") && (extension22.ToLower() == ".jpg" || extension22.ToLower() == ".jpeg" || extension22.ToLower() == ".png"))
                     {
-                        post.Category = "Basketball";
-                    }
-                    else if (adminViewModel.Category == 2)
-                    {
-                        post.Category = "Nature";
-                    }
-                    else if (adminViewModel.Category == 3)
-                    {
-                        post.Category = "Food";
-                    }
-                    else if (adminViewModel.Category == 4)
-                    {
-                        post.Category = "Coding";
+                        if (editViewModel.Image1File.ContentLength <= 2097152 && editViewModel.Image2File.ContentLength <= 2097152)
+                        {
+                            post.Img2Path = "~/Image/" + _fileName22;
+                            post.Img1Path = "~/Image/" + _fileName12;
+                            post.CreatedAt = editVMTemp.CreatedAt;
+                            post.Id = editViewModel.Id;
+                            post.ShortDescription = editViewModel.ShortDescription;
+                            post.Title = editViewModel.Title;
+                            post.LongDescription = editViewModel.LongDescription;
+                            post.ReadTime = editViewModel.ReadTime;
+                            if (editViewModel.Category == 1)
+                            {
+                                post.Category = "Basketball";
+                            }
+                            else if (editViewModel.Category == 2)
+                            {
+                                post.Category = "Nature";
+                            }
+                            else if (editViewModel.Category == 3)
+                            {
+                                post.Category = "Food";
+                            }
+                            else if (editViewModel.Category == 4)
+                            {
+                                post.Category = "Coding";
+                            }
+                            else
+                            {
+                                return View(editVMTemp);
+                            }
+                            dbModels.Entry(post).State = EntityState.Modified;
+                            string oldImgPath22 = editVMTemp.Img2Path;
+                            string oldImgPath12 = editVMTemp.Img1Path;
+
+                            if (dbModels.SaveChanges() > 0)
+                            {
+                                editViewModel.Image2File.SaveAs(path22);
+                                editViewModel.Image1File.SaveAs(path12);
+                                if (System.IO.File.Exists(oldImgPath12))
+                                {
+                                    System.IO.File.Delete(oldImgPath12);
+                                }
+
+                                if (System.IO.File.Exists(oldImgPath22))
+                                {
+                                    System.IO.File.Delete(oldImgPath22);
+                                }
+                                TempData["msg"] = "Data Updated";
+                                return RedirectToAction("Index");
+                            }
+                        }
+                        else
+                        {
+                            ViewBag.msg = "File Size must be Equal or less than 1MB";
+                        }
                     }
                     else
                     {
-                        return View();
+                        ViewBag.msg = "Invalid File Type";
                     }
-                    post.ReadTime = adminViewModel.ReadTime;
-                    string oldPath1 = Request.MapPath(TempData["img1Path"].ToString());
-                    string oldPath2 = Request.MapPath(TempData["img2Path"].ToString());
-                    dbModels.Entry(post).State = EntityState.Modified;
-                    if (dbModels.SaveChanges() > 0)
-                    {
-                        if (System.IO.File.Exists(oldPath1))
-                        {
-                            System.IO.File.Delete(oldPath1);
-                        }
-                        if (System.IO.File.Exists(oldPath2))
-                        {
-                            System.IO.File.Delete(oldPath2);
-                        }
-                        TempData["msg"] = "Data Updated";
-                        return RedirectToAction("Index");
 
-                    }
                 }
             }
-            return View();
+            return View(editVMTemp);
         }
 
         // GET: PostAdmn/Delete/5

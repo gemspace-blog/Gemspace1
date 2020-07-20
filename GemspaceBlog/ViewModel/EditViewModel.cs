@@ -8,11 +8,11 @@ using System.Web;
 
 namespace GemspaceBlog.ViewModel
 {
-    public class AdminViewModel
+    public class EditViewModel
     {
         public int Id { get; set; }
         [DisplayName("Post Title")]
-        [Required(ErrorMessage ="Post title is required")]
+        [Required(ErrorMessage = "Post title is required")]
         [StringLength(50)]
         public string Title { get; set; }
         [DisplayName("Short Description")]
@@ -34,20 +34,7 @@ namespace GemspaceBlog.ViewModel
         public string Img2Path { get; set; }
         [DisplayName("Created At")]
         public DateTime CreatedAt { get; set; }
-
-        [MaxFileSizeValidator(2 * 1024 * 1024)]
-        [AllowedFileTypeValidator(new string[] { ".jpg", ".png", ".jpeg" })]
         public HttpPostedFileBase Image1File { get; set; }
-
-        [MaxFileSizeValidator(2 * 1024 * 1024)]
-        [AllowedFileTypeValidator(new string[] { ".jpg", ".png", ".jpeg" })]
         public HttpPostedFileBase Image2File { get; set; }
-    }
-    public enum Category
-    {
-        Basketball = 1,
-        Nature = 2 ,
-        Food = 3,
-        Coding = 4
     }
 }

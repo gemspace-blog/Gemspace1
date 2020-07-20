@@ -1,10 +1,11 @@
-﻿@model GemspaceBlog.ViewModel.AdminViewModel
+﻿@model GemspaceBlog.ViewModel.EditViewModel
 
 @{
     ViewBag.Title = "Edit";
 }
 
 <h2>Edit</h2>
+<h4 class="text-danger">@ViewBag.msg</h4>
 
 
 @using (Html.BeginForm("Edit", "PostAdmn", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -63,7 +64,7 @@
         <div class="col-md-10">
             <img src="@Url.Content(Model.Img1Path)" height="100" width="100" />
             <input type="file" name="Image1File" />
-            @Html.ValidationMessageFor(model => model.Img1Path, "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(model => model.Image1File, "", new { @class = "text-danger" })
         </div>
     </div>
 
@@ -72,7 +73,7 @@
         <div class="col-md-10">
             <img src="@Url.Content(Model.Img2Path)" height="100" width="100" />
             <input type="file" name="Image2File" />
-            @Html.ValidationMessageFor(model => model.Img2Path, "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(model => model.Image2File, "", new { @class = "text-danger" })
         </div>
     </div>
 
