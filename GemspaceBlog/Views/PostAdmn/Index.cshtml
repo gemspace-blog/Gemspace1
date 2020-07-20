@@ -1,8 +1,11 @@
-﻿@model IEnumerable<GemspaceBlog.Models.Post>
+﻿@model IPagedList<GemspaceBlog.Models.Post>
 
 @{
     ViewBag.Title = "Index";
 }
+
+@using PagedList.Mvc;
+@using PagedList;
 
 <h4 class="text-success">@TempData["msg"]</h4>
 
@@ -12,28 +15,28 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Title)
+            @Html.DisplayNameFor(model => model.First().Title)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ShortDescription)
+            @Html.DisplayNameFor(model => model.First().ShortDescription)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.LongDescription)
+            @Html.DisplayNameFor(model => model.First().LongDescription)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Category)
+            @Html.DisplayNameFor(model => model.First().Category)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ReadTime)
+            @Html.DisplayNameFor(model => model.First().ReadTime)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Img1Path)
+            @Html.DisplayNameFor(model => model.First().Img1Path)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Img2Path)
+            @Html.DisplayNameFor(model => model.First().Img2Path)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CreatedAt)
+            @Html.DisplayNameFor(model => model.First().CreatedAt)
         </th>
         <th>Actions</th>
     </tr>
@@ -73,3 +76,5 @@
 }
 
 </table>
+
+@Html.PagedListPager(Model, i => Url.Action("Index", "PostAdmn", new { i}))

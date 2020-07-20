@@ -8,6 +8,8 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using PagedList.Mvc;
+using PagedList;
 
 namespace GemspaceBlog.Controllers
 {
@@ -15,9 +17,11 @@ namespace GemspaceBlog.Controllers
     {
         public DbModels dbModels = new DbModels();
         // GET: PostAdmn
-        public ActionResult Index()
+        // This is a method called Index within the PostAdmn Controller 
+        // the url to access this is /PostAdmn/Index
+        public ActionResult Index( int? i)
         {
-            return View(dbModels.Posts.ToList());
+            return View(dbModels.Posts.ToList().ToPagedList(i ?? 1,10));
         }
 
         // GET: PostAdmn/Details/5
