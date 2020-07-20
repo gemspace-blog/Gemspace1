@@ -73,8 +73,17 @@ namespace GemspaceBlog.Controllers
                 post.ShortDescription = adminViewModel.ShortDescription;
                 post.LongDescription = adminViewModel.LongDescription;
                 post.ReadTime = adminViewModel.ReadTime;
-                post.Img1Path = SavePhoto(adminViewModel.Image1File);
-                post.Img2Path = SavePhoto(adminViewModel.Image2File);
+
+                if(PhotoValidation(adminViewModel.Image1File))
+                {
+                    post.Img1Path = SavePhoto(adminViewModel.Image1File);
+                }
+
+                if (PhotoValidation(adminViewModel.Image2File))
+                {
+                    post.Img2Path = SavePhoto(adminViewModel.Image2File);
+                }
+
                 post.CreatedAt = DateTime.Now;
 
                 //Saving in DB
@@ -348,9 +357,20 @@ namespace GemspaceBlog.Controllers
             {
                 Post post = dbModels.Posts.Where(x => x.Id == id).FirstOrDefault();
                 string postTitl = post.Title;
+                string oldPath1 =  Request.MapPath(post.Img1Path);
+                string oldPath2 =  Request.MapPath(post.Img2Path);
+
                 dbModels.Posts.Remove(post);
                 if (dbModels.SaveChanges() > 0) {
                     TempData["msg"] = "The post "+ postTitl + " got deleted";
+                    if (System.IO.File.Exists(oldPath1))
+                    {
+                        System.IO.File.Delete(oldPath1);
+                    }
+                    if (System.IO.File.Exists(oldPath2))
+                    {
+                        System.IO.File.Delete(oldPath2);
+                    }
                     return RedirectToAction("Index");
                 }
                 return RedirectToAction("Index");
@@ -359,6 +379,21 @@ namespace GemspaceBlog.Controllers
             {
                 return View();
             }
+        }
+
+        public bool PhotoValidation(HttpPostedFileBase file)
+        {
+
+            var extension = Path.GetExtension(file.FileName);
+            if (extension == ".jpeg" || extension == ".png" || extension == ".jpg")
+            {
+                if (file.ContentLength < (2 * 1024 *1024))
+                {
+                    return true;
+                }
+                return false;
+            }
+            return false;
         }
 
         public string SavePhoto(HttpPostedFileBase file)

@@ -13,7 +13,7 @@ namespace GemspaceBlog.Controllers
         public DbModels dbModels = new DbModels();
         public ActionResult Index()
         {
-            return View();
+            return View(dbModels.Posts.ToList());
         }
 
         public ActionResult Basketball()
