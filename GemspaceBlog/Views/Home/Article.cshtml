@@ -4,15 +4,15 @@
     ViewBag.Title = "Article";
 }
 
-    <h1>@Model.Title</h1>
-    <img src="@Url.Content(Model.Img2Path)" />
-    <p>@Model.LongDescription</p>
-    <p>@Model.CreatedAt</p>
-    <p>@Model.ReadTime</p>
 
+    <section class="article-header-img w-100 position-relative">
+        <img src="@Url.Content(Model.Img2Path)" />
+    </section>
 
-<section class="main-content">
-@*//long desc dhe title photo 2*@
+    <section class="article-container">
+        @*//long desc dhe title photo 2*@
+        <h1>@Model.Title</h1>
+        <h5>@Model.CreatedAt</h5>
+        <p>@Model.LongDescription</p>
 
-
-</section>
+    </section>

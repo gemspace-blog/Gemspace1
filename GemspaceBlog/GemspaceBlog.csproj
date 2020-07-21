@@ -201,6 +201,7 @@
     <Content Include="globalimg\twitter.svg" />
     <Content Include="globalimg\type-svg.svg" />
     <Content Include="globalimg\wave.svg" />
+    <Content Include="js\index-page.js" />
     <Content Include="js\main.js" />
     <Content Include="Models\DbModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -358,11 +359,11 @@
     <Content Include="Views\Home\Coding.cshtml" />
     <Content Include="Views\Home\Article.cshtml" />
     <Content Include="Views\Home\AboutMe.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Image\" />
-    <Folder Include="Views\Account\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

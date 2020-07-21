@@ -19,9 +19,9 @@ namespace GemspaceBlog.Controllers
         // GET: PostAdmn
         // This is a method called Index within the PostAdmn Controller 
         // the url to access this is /PostAdmn/Index
-        public ActionResult Index( int? i)
+        public ActionResult Index(int? i)
         {
-            return View(dbModels.Posts.ToList().ToPagedList(i ?? 1,5));
+            return View(dbModels.Posts.ToList().ToPagedList(i ?? 1, 5));
         }
 
         // GET: PostAdmn/Details/5
@@ -32,7 +32,7 @@ namespace GemspaceBlog.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Post post = dbModels.Posts.Where(x => x.Id == id).FirstOrDefault();
-            if (post == null) 
+            if (post == null)
             {
                 return HttpNotFound();
             }
@@ -49,7 +49,8 @@ namespace GemspaceBlog.Controllers
         [HttpPost]
         public ActionResult Create(AdminViewModel adminViewModel)
         {
-            if (ModelState.IsValid) {
+            if (ModelState.IsValid)
+            {
                 Post post = new Post();
                 if (adminViewModel.Category == 1)
                 {
@@ -63,7 +64,7 @@ namespace GemspaceBlog.Controllers
                 {
                     post.Category = "Food";
                 }
-                else if(adminViewModel.Category == 4)
+                else if (adminViewModel.Category == 4)
                 {
                     post.Category = "Coding";
                 }
@@ -79,7 +80,7 @@ namespace GemspaceBlog.Controllers
                 post.LongDescription = adminViewModel.LongDescription;
                 post.ReadTime = adminViewModel.ReadTime;
 
-                if(PhotoValidation(adminViewModel.Image1File))
+                if (PhotoValidation(adminViewModel.Image1File))
                 {
                     post.Img1Path = SavePhoto(adminViewModel.Image1File);
                 }
@@ -130,7 +131,7 @@ namespace GemspaceBlog.Controllers
             editViewModel.Img1Path = post.Img1Path;
             editViewModel.Img2Path = post.Img2Path;
             editViewModel.CreatedAt = post.CreatedAt;
-            
+
             if (post.Category == "Basketball")
             {
                 editViewModel.Category = 1;
@@ -156,43 +157,14 @@ namespace GemspaceBlog.Controllers
         [HttpPost]
         public ActionResult Edit(int id, EditViewModel editViewModel)
         {
-            Post tempPost = dbModels.Posts.Where(x => x.Id == id).FirstOrDefault();
-            EditViewModel editVMTemp = new EditViewModel
-            {
-                Id = tempPost.Id,
-                Title = tempPost.Title,
-                ShortDescription = tempPost.ShortDescription,
-                LongDescription = tempPost.LongDescription,
-                ReadTime = tempPost.ReadTime,
-                CreatedAt = tempPost.CreatedAt,
-                Img1Path = tempPost.Img1Path,
-                Img2Path = tempPost.Img2Path
-            };
-            if (tempPost.Category == "Basketball")
-            {
-                editVMTemp.Category = 1;
-            }
-            else if (tempPost.Category == "Nature")
-            {
-                editVMTemp.Category = 2;
-            }
-            else if (tempPost.Category == "Food")
-            {
-                editVMTemp.Category = 3;
-            }
-            else if (tempPost.Category == "Coding")
-            {
-                editVMTemp.Category = 4;
-            }
-
             if (ModelState.IsValid)
             {
                 Post post = new Post();
                 if (editViewModel.Image1File == null && editViewModel.Image2File == null)
                 {
-                    post.Img1Path = editVMTemp.Img1Path;
-                    post.Img2Path = editVMTemp.Img2Path;
-                    post.CreatedAt = editVMTemp.CreatedAt;
+                    post.Img1Path = (string)TempData["img1Path"];//editVMTemp.Img1Path;
+                    post.Img2Path = (string)TempData["img2Path"];// = post.Img2Path;  editVMTemp.Img2Path;
+                    post.CreatedAt = (DateTime)TempData["datetime"];
                     post.Id = editViewModel.Id;
                     post.ShortDescription = editViewModel.ShortDescription;
                     post.Title = editViewModel.Title;
@@ -216,7 +188,7 @@ namespace GemspaceBlog.Controllers
                     }
                     else
                     {
-                        return View(editVMTemp);
+                        return View(ToVM(dbModels.Posts.Where(x => x.Id == id).FirstOrDefault()));
                     }
 
                     dbModels.Entry(post).State = EntityState.Modified;
@@ -248,8 +220,8 @@ namespace GemspaceBlog.Controllers
                         if (editViewModel.Image1File.ContentLength <= 2097152)
                         {
                             post.Img1Path = "~/Image/" + _fileName1;
-                            post.Img2Path = editVMTemp.Img2Path;
-                            post.CreatedAt = editVMTemp.CreatedAt;
+                            post.Img2Path = (string)TempData["img2Path"];
+                            post.CreatedAt = (DateTime)TempData["datetime"];
                             post.Id = editViewModel.Id;
                             post.ShortDescription = editViewModel.ShortDescription;
                             post.Title = editViewModel.Title;
@@ -273,10 +245,10 @@ namespace GemspaceBlog.Controllers
                             }
                             else
                             {
-                                return View(editVMTemp);
+                                return View(ToVM(dbModels.Posts.Where(x => x.Id == id).FirstOrDefault()));
                             }
                             dbModels.Entry(post).State = EntityState.Modified;
-                            string oldImgPath1 = editVMTemp.Img1Path;
+                            string oldImgPath1 = (string)TempData["img1Path"];
 
                             if (dbModels.SaveChanges() > 0)
                             {
@@ -288,11 +260,11 @@ namespace GemspaceBlog.Controllers
                                 TempData["msg"] = "Data Updated";
                                 return RedirectToAction("Index");
                             }
-                            
+
                         }
                         else
                         {
-                            ViewBag.msg = "File Size must be Equal or less than 1MB";
+                            ViewBag.msg = "File Size must be Equal or less than 2 MB";
                         }
                     }
                     else
@@ -315,8 +287,8 @@ namespace GemspaceBlog.Controllers
                         {
 
                             post.Img2Path = "~/Image/" + _fileName2;
-                            post.Img1Path = editVMTemp.Img1Path;
-                            post.CreatedAt = editVMTemp.CreatedAt;
+                            post.Img1Path = (string)TempData["img2Path"];
+                            post.CreatedAt = (DateTime)TempData["datetime"];
                             post.Id = editViewModel.Id;
                             post.ShortDescription = editViewModel.ShortDescription;
                             post.Title = editViewModel.Title;
@@ -340,10 +312,10 @@ namespace GemspaceBlog.Controllers
                             }
                             else
                             {
-                                return View(editVMTemp);
+                                return View(ToVM(dbModels.Posts.Where(x => x.Id == id).FirstOrDefault()));
                             }
                             dbModels.Entry(post).State = EntityState.Modified;
-                            string oldImgPath2 = editVMTemp.Img2Path;
+                            string oldImgPath2 = (string)TempData["img2Path"];
 
                             if (dbModels.SaveChanges() > 0)
                             {
@@ -358,7 +330,7 @@ namespace GemspaceBlog.Controllers
                         }
                         else
                         {
-                            ViewBag.msg = "File Size must be Equal or less than 1MB";
+                            ViewBag.msg = "File Size must be Equal or less than 2 MB";
                         }
 
                     }
@@ -390,7 +362,7 @@ namespace GemspaceBlog.Controllers
                         {
                             post.Img2Path = "~/Image/" + _fileName22;
                             post.Img1Path = "~/Image/" + _fileName12;
-                            post.CreatedAt = editVMTemp.CreatedAt;
+                            post.CreatedAt = (DateTime)TempData["datetime"];
                             post.Id = editViewModel.Id;
                             post.ShortDescription = editViewModel.ShortDescription;
                             post.Title = editViewModel.Title;
@@ -414,11 +386,11 @@ namespace GemspaceBlog.Controllers
                             }
                             else
                             {
-                                return View(editVMTemp);
+                                return View(ToVM(dbModels.Posts.Where(x => x.Id == id).FirstOrDefault()));
                             }
                             dbModels.Entry(post).State = EntityState.Modified;
-                            string oldImgPath22 = editVMTemp.Img2Path;
-                            string oldImgPath12 = editVMTemp.Img1Path;
+                            string oldImgPath22 = (string)TempData["img2Path"];
+                            string oldImgPath12 = (string)TempData["img1Path"];
 
                             if (dbModels.SaveChanges() > 0)
                             {
@@ -439,7 +411,7 @@ namespace GemspaceBlog.Controllers
                         }
                         else
                         {
-                            ViewBag.msg = "File Size must be Equal or less than 1MB";
+                            ViewBag.msg = "File Size must be Equal or less than 2 MB";
                         }
                     }
                     else
@@ -449,13 +421,13 @@ namespace GemspaceBlog.Controllers
 
                 }
             }
-            return View(editVMTemp);
+            return View(ToVM(dbModels.Posts.Where(x => x.Id == id).FirstOrDefault()));
         }
 
         // GET: PostAdmn/Delete/5
         public ActionResult Delete(int? id)
         {
-            if(id == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -475,12 +447,13 @@ namespace GemspaceBlog.Controllers
             {
                 Post post = dbModels.Posts.Where(x => x.Id == id).FirstOrDefault();
                 string postTitl = post.Title;
-                string oldPath1 =  Request.MapPath(post.Img1Path);
-                string oldPath2 =  Request.MapPath(post.Img2Path);
+                string oldPath1 = Request.MapPath(post.Img1Path);
+                string oldPath2 = Request.MapPath(post.Img2Path);
 
                 dbModels.Posts.Remove(post);
-                if (dbModels.SaveChanges() > 0) {
-                    TempData["msg"] = "The post "+ postTitl + " got deleted";
+                if (dbModels.SaveChanges() > 0)
+                {
+                    TempData["msg"] = "The post " + postTitl + " got deleted";
                     if (System.IO.File.Exists(oldPath1))
                     {
                         System.IO.File.Delete(oldPath1);
@@ -505,7 +478,7 @@ namespace GemspaceBlog.Controllers
             var extension = Path.GetExtension(file.FileName);
             if (extension == ".jpeg" || extension == ".png" || extension == ".jpg")
             {
-                if (file.ContentLength < (2 * 1024 *1024))
+                if (file.ContentLength < (2 * 1024 * 1024))
                 {
                     return true;
                 }
@@ -523,6 +496,40 @@ namespace GemspaceBlog.Controllers
             fileName = Path.Combine(Server.MapPath("~/Image/"), fileName);
             file.SaveAs(fileName);
             return dbPath;
+        }
+
+        public EditViewModel ToVM(Post post)
+        {
+            EditViewModel editVM = new EditViewModel
+            {
+                Id = post.Id,
+                Title = post.Title,
+                ShortDescription = post.ShortDescription,
+                LongDescription = post.LongDescription,
+                ReadTime = post.ReadTime,
+                CreatedAt = post.CreatedAt,
+                Img1Path = post.Img1Path,
+                Img2Path = post.Img2Path
+            };
+
+            if (post.Category == "Basketball")
+            {
+                editVM.Category = 1;
+            }
+            else if (post.Category == "Nature")
+            {
+                editVM.Category = 2;
+            }
+            else if (post.Category == "Food")
+            {
+                editVM.Category = 3;
+            }
+            else if (post.Category == "Coding")
+            {
+                editVM.Category = 4;
+            }
+
+            return editVM;
         }
     }
 }
