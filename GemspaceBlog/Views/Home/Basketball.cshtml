@@ -1,8 +1,11 @@
-﻿@model GemspaceBlog.Models.Post
+﻿@model IPagedList<GemspaceBlog.Models.Post>
 
 @{
     ViewBag.Title = "Basketball";
 }
+
+@using PagedList.Mvc;
+@using PagedList;
 
 <section class="w-100 position-relative overflow-hidden pages-header">
     <img class="page-wallpaper" src="~/globalimg/basketball-landscape.jpg" alt="GemSpace Coding Wallpaper" />
@@ -11,26 +14,26 @@
 </section>
 
 <section class="main-content">
-    <article class="generated-content">
-        @*need title short desc img 1*@
-        <div class="generated-img">
-            <img src="~/globalimg/main-wallpaper.jpg"> <!--image 1-->
-        </div>
-        <div class="generated-text">
-            <div class="w-100 d-flex justify-content-between flex-wrap">
-                <h2 class="generated-title">Titull Blog 1</h2><!--title-->
-                <h5 class="generated-category">Basketball</h5><!--category-->
+    @foreach (var item in Model)
+    {
+        <article class="generated-content">
+            @*need title short desc img 1*@
+            <div class="generated-img">
+                <img src="@Url.Content(item.Img2Path)"> <!--image 1-->
             </div>
-            <p class="generated-shdesc">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-                dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                sunt in culpa qui officia deserunt mollit anim id est laborum
-            </p><!--short desc-->
-            <h6 class="text-right" style="color:rgba(200,200,200,1);margin:15px 0;">10/10/2020</h6>
-        </div>
-    </article>
+            <div class="generated-text">
+                <div class="w-100 d-flex justify-content-between flex-wrap">
+                    <h2 class="generated-title"><a href="@Url.Action("Article","Home", new { id = item.Id})">@item.Title</a></h2><!--title-->
+                    <h5 class="generated-category">@item.Category</h5><!--category-->
+                </div>
+                <p class="generated-shdesc">
+                    @item.ShortDescription
+                </p><!--short desc-->
+                <h6 class="text-right" style="color:rgba(200,200,200,1);margin:15px 0;">@item.CreatedAt</h6>
+            </div>
+        </article>
+    }
 </section>
+
+@Html.PagedListPager(Model, i => Url.Action("Basketball", "Home", new { i }))
 

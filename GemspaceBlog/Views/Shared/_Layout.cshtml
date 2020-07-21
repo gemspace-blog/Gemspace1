@@ -3,15 +3,15 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>Gemspace</title>
     <link href="https://fonts.googleapis.com/css2?family=Red+Rose&display=swap" rel="stylesheet">
     <script src="~/js/main.js" defer></script>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <header>
-        <span class="menu-trigger">
+    <header >
+        <span class="menu-trigger" >
             <img src="~/globalimg/menu.svg" alt="GameSpace menu trigger icon" />
         </span>
         <nav>
@@ -21,7 +21,7 @@
                     <img src="~/globalimg/basketball.svg" alt="GameSpace basketball svg" />
                     <h3>Basketball</h3>
                 </div>
-                <a href="#"></a>
+                <a href="@Url.Action("Basketball","Home")"></a>
             </div>
             <div>
                 <img src="~/globalimg/food-wallpaper.jpg" alt="GameSpace food wallpaper" />
@@ -29,7 +29,7 @@
                     <img src="~/globalimg/food.svg" alt="GameSpace food svg" />
                     <h3>Food</h3>
                 </div>
-                <a href="#"></a>
+                <a href="@Url.Action("Food","Home")"></a>
             </div>
             <div>
                 <img src="~/globalimg/nature-wallpaper.jpg" alt="GameSpace nature wallpaper" />
@@ -37,7 +37,7 @@
                     <img src="~/globalimg/forest.svg" alt="GameSpace forest svg" />
                     <h3>Nature</h3>
                 </div>
-                <a href="#"></a>
+                <a href="@Url.Action("Nature","Home")"></a>
             </div>
             <div>
                 <img src="~/globalimg/coding-wallpaper.jpg" alt="GameSpace coding wallpaper" />
@@ -45,10 +45,10 @@
                     <img src="~/globalimg/computer.svg" alt="GameSpace computer svg" />
                     <h3>Coding</h3>
                 </div>
-                <a href="#"></a>
+                <a href="@Url.Action("Coding","Home")"></a>
             </div>
             <span class="nav-options">
-                <a href="#"><img src="~/globalimg/home-icon.svg" alt="GameSpace back icon" /></a>
+                <a href="@Url.Action("Index","Home")"><img src="~/globalimg/home-icon.svg" alt="GameSpace back icon" /></a>
                 <img class="menu-closer" src="~/globalimg/back.svg" alt="GameSpace back icon" />
             </span>
         </nav>
@@ -57,11 +57,11 @@
     <main> 
         @RenderBody() 
     </main>
-    <footer class="w-100 position-relative">
+    <footer class="w-100 position-relative" id="footer">
         <h6>Copyrights © GemSpace</h6>
         <div>
-            <a href="#"><img src="~/globalimg/facebook.svg" alt="GameSpace facebook icon" /></a>
-            <a href="#"><img src="~/globalimg/instagram.svg" alt="GameSpace instagram icon" /></a>
+            <a href=" https://m.facebook.com/xhemi.ahmetaj.13"><img src="~/globalimg/facebook.svg" alt="GameSpace facebook icon" /></a>
+            <a href="https://instagram.com/xhemi.ahmetaj"><img src="~/globalimg/instagram.svg" alt="GameSpace instagram icon" /></a>
             <a href="#"><img src="~/globalimg/twitter.svg" alt="GameSpace twitter icon" /></a>
         </div>
     </footer>

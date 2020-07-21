@@ -21,7 +21,7 @@ namespace GemspaceBlog.Controllers
         // the url to access this is /PostAdmn/Index
         public ActionResult Index( int? i)
         {
-            return View(dbModels.Posts.ToList().ToPagedList(i ?? 1,10));
+            return View(dbModels.Posts.ToList().ToPagedList(i ?? 1,5));
         }
 
         // GET: PostAdmn/Details/5

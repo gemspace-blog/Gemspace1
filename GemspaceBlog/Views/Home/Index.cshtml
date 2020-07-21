@@ -1,70 +1,75 @@
-﻿@model IEnumerable<GemspaceBlog.Models.Post>
+﻿@model IPagedList<GemspaceBlog.Models.Post>
 @{
     ViewBag.Title = "Home Page";
 }
 
+@using PagedList.Mvc;
+@using PagedList;
 
-    <section class="main-header">
-        <img class="header-wallpaper" src="~/globalimg/main-wallpaper.jpg" alt="gemspace blog wallpaper" />
-        <div class="blog-title">
-            <img src="~/globalimg/feather-logo.svg" alt="gemspace blog svg logo" />
-            <h1>GemSpace</h1>
-        </div>
-        <div class="entry-design d-flex flex-column align-items-center">
-            <div class="w-100 index-nav">
-                <div class="logo">
-                    <h5>GemSpace</h5>
-                </div>                
-                <div>
-                    <a href="#">Categories</a>
-                    <a href="#">Follow</a>
-                    <a href="#">Contact Me</a>
-                </div>
+
+<section class="main-header">
+    <img class="header-wallpaper" src="~/globalimg/main-wallpaper.jpg" alt="gemspace blog wallpaper" />
+    <div class="blog-title">
+        <img src="~/globalimg/feather-logo.svg" alt="gemspace blog svg logo" />
+        <h1>GemSpace</h1>
+    </div>
+    <div class="entry-design d-flex flex-column align-items-center">
+        <div class="w-100 index-nav">
+            <div class="logo">
+                <h5>GemSpace</h5>
             </div>
-            <img class="home-svg" src="~/globalimg/type-svg.svg" alt="gemspace blog svg" />
-            <h3>A blog by Xhemi</h3>
-            <img class="wavy" src="~/globalimg/wave.svg" alt="gemspace blog wavy svg" />
+            <div>
+                <a href="#" class="menu-trigger-1">Categories</a>
+                <a href="#footer">Follow</a>
+                <a href="@Url.Action("AboutMe", "Home")">About Me</a>
+            </div>
         </div>
-    </section>
-    <section class="home-categories w-100 position-relative">
-        <h2>Categories...</h2>
-        <div>
-            <a href="#">
-                <img src="~/globalimg/basketball.svg" alt="gemspace blog svg"/>
-                <h5>Basketball</h5>
-            </a>
-            <a href="#">
-                <img src="~/globalimg/food.svg" alt="gemspace blog svg" />
-                <h5>Food</h5></a>
-            <a href="#">
-                <img src="~/globalimg/forest.svg" alt="gemspace blog svg" />
-                <h5>Nature</h5>
-            </a>
-            <a href="#">
-                <img src="~/globalimg/computer.svg" alt="gemspace blog svg" />
-                <h5>Coding</h5>
-            </a>
-        </div>
-    </section>
-    <section class="main-content">
-        @foreach (var item in Model)
-        {
-            <article class="generated-content">
-                <div class="generated-img">
-                    <img src="@Url.Content(item.Img1Path)"> <!--image 1-->
+        <img class="home-svg" src="~/globalimg/type-svg.svg" alt="gemspace blog svg" />
+        <h3>A blog by Xhemi</h3>
+        <img class="wavy" src="~/globalimg/wave.svg" alt="gemspace blog wavy svg" />
+    </div>
+</section>
+<section class="home-categories w-100 position-relative" id="menu">
+    <h2>Categories...</h2>
+    <div>
+        <a href="@Url.Action("Basketball","Home")">
+            <img src="~/globalimg/basketball.svg" alt="gemspace blog svg" />
+            <h5>Basketball</h5>
+        </a>
+        <a href="@Url.Action("Food","Home")">
+            <img src="~/globalimg/food.svg" alt="gemspace blog svg" />
+            <h5>Food</h5>
+        </a>
+        <a href="@Url.Action("Nature","Home")">
+            <img src="~/globalimg/forest.svg" alt="gemspace blog svg" />
+            <h5>Nature</h5>
+        </a>
+        <a href="@Url.Action("Coding","Home")">
+            <img src="~/globalimg/computer.svg" alt="gemspace blog svg" />
+            <h5>Coding</h5>
+        </a>
+    </div>
+</section>
+<section class="main-content">
+    @foreach (var item in Model)
+    {
+        <article class="generated-content">
+            <div class="generated-img">
+                <img src="@Url.Content(item.Img1Path)"> <!--image 1-->
+            </div>
+            <div class="generated-text">
+                <div class="w-100 d-flex justify-content-between flex-wrap">
+                    <h2 class="generated-title"><a href="@Url.Action("Article","Home", new { id = item.Id})">@item.Title</a></h2><!--title-->
+                    <h5 class="generated-category">@item.Category</h5><!--category-->
                 </div>
-                <div class="generated-text">
-                    <div class="w-100 d-flex justify-content-between flex-wrap">
-                        <h2 class="generated-title"><a href="#">@item.Title</a></h2><!--title-->
-                        <h5 class="generated-category">@item.Category</h5><!--category-->
-                    </div>
-                    <p class="generated-shdesc">
-                        @item.ShortDescription
-                    </p><!--short desc-->
-                    <h6 class="text-right" style="color:rgba(200,200,200,1);margin:15px 0;">@item.CreatedAt</h6>
-                </div>
-            </article>
+                <p class="generated-shdesc">
+                    @item.ShortDescription
+                </p><!--short desc-->
+                <h6 class="text-right" style="color:rgba(200,200,200,1);margin:15px 0;">@item.CreatedAt</h6>
+            </div>
+        </article>
+    }
 
-        }
+</section>
 
-    </section>
+@Html.PagedListPager(Model, i => Url.Action("Index", "Home", new { i }))

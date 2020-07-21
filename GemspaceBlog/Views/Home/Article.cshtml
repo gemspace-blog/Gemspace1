@@ -4,7 +4,11 @@
     ViewBag.Title = "Article";
 }
 
-
+    <h1>@Model.Title</h1>
+    <img src="@Url.Content(Model.Img2Path)" />
+    <p>@Model.LongDescription</p>
+    <p>@Model.CreatedAt</p>
+    <p>@Model.ReadTime</p>
 
 
 <section class="main-content">

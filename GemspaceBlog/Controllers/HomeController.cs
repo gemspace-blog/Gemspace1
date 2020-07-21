@@ -5,35 +5,37 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Net;
+using PagedList.Mvc;
+using PagedList;
 
 namespace GemspaceBlog.Controllers
 {
     public class HomeController : Controller
     {
         public DbModels dbModels = new DbModels();
-        public ActionResult Index()
+        public ActionResult Index(int? i)
         {
-            return View(dbModels.Posts.ToList());
+            return View(dbModels.Posts.OrderByDescending(x => x.CreatedAt).ToList().ToPagedList(i ?? 1, 5));
         }
 
-        public ActionResult Basketball()
+        public ActionResult Basketball(int? i)
         {
-            return View();
+            return View(dbModels.Posts.Where(x=>x.Category == "Basketball").OrderByDescending( z => z.CreatedAt).ToList().ToPagedList(i ?? 1, 5));
         }
 
-        public ActionResult Food()
+        public ActionResult Food(int? i)
         {
-            return View();
+            return View(dbModels.Posts.Where(x =>x.Category == "Food").OrderByDescending(z => z.CreatedAt).ToList().ToPagedList(i ?? 1 , 5 ));
         }
 
-        public ActionResult Nature()
+        public ActionResult Nature(int? i)
         {
-            return View();
+            return View(dbModels.Posts.Where(x => x.Category == "Nature").OrderByDescending(z => z.CreatedAt).ToList().ToPagedList(i ?? 1, 5));
         }
 
-        public ActionResult Coding()
+        public ActionResult Coding(int? i)
         {
-            return View();
+            return View(dbModels.Posts.Where(x => x.Category == "Coding").OrderByDescending(z => z.CreatedAt).ToList().ToPagedList(i ?? 1, 5));
         }
 
         public ActionResult Article(int? id)
