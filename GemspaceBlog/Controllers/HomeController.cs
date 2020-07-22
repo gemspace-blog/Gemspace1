@@ -13,6 +13,7 @@ namespace GemspaceBlog.Controllers
     public class HomeController : Controller
     {
         public DbModels dbModels = new DbModels();
+
         public ActionResult Index(int? i)
         {
             return View(dbModels.Posts.OrderByDescending(x => x.CreatedAt).ToList().ToPagedList(i ?? 1, 5));
@@ -20,12 +21,12 @@ namespace GemspaceBlog.Controllers
 
         public ActionResult Basketball(int? i)
         {
-            return View(dbModels.Posts.Where(x=>x.Category == "Basketball").OrderByDescending( z => z.CreatedAt).ToList().ToPagedList(i ?? 1, 5));
+            return View(dbModels.Posts.Where(x => x.Category == "Basketball").OrderByDescending(z => z.CreatedAt).ToList().ToPagedList(i ?? 1, 5));
         }
 
         public ActionResult Food(int? i)
         {
-            return View(dbModels.Posts.Where(x =>x.Category == "Food").OrderByDescending(z => z.CreatedAt).ToList().ToPagedList(i ?? 1 , 5 ));
+            return View(dbModels.Posts.Where(x => x.Category == "Food").OrderByDescending(z => z.CreatedAt).ToList().ToPagedList(i ?? 1, 5));
         }
 
         public ActionResult Nature(int? i)
@@ -40,14 +41,14 @@ namespace GemspaceBlog.Controllers
 
         public ActionResult Article(int? id)
         {
-            if(id == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
             Post post = dbModels.Posts.Where(x => x.Id == id).FirstOrDefault();
 
-            if(post == null)
+            if (post == null)
             {
                 return HttpNotFound();
             }
@@ -55,7 +56,7 @@ namespace GemspaceBlog.Controllers
         }
 
         public ActionResult AboutMe()
-        {            
+        {
             return View();
         }
     }

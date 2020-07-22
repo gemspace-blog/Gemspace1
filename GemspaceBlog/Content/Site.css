@@ -370,6 +370,20 @@ nav {
     font-size: 18px;
 }
 
+.login-class{
+    width: 40%;
+    margin: 0 auto;
+}
+
+.login-name {
+    width: 40%;
+    margin: 0 auto;
+}
+
+.container-empty {
+    height:50px;
+}
+
 footer {
     background-color: rgb(40,40,40);
     color: rgb(230,230,230);
