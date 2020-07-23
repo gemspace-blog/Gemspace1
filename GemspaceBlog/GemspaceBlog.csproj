@@ -197,6 +197,8 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="globalimg\about_me_svg.svg" />
+    <Content Include="globalimg\about_me_wave.svg" />
     <Content Include="globalimg\back.svg" />
     <Content Include="globalimg\basketball-landscape.jpg" />
     <Content Include="globalimg\basketball-wallpaper.jpg" />
