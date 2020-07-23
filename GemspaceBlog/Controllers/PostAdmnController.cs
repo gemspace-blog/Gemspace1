@@ -13,12 +13,14 @@ using PagedList;
 
 namespace GemspaceBlog.Controllers
 {
+    [Authorize]
     public class PostAdmnController : Controller
     {
         public DbModels dbModels = new DbModels();
         // GET: PostAdmn
         // This is a method called Index within the PostAdmn Controller 
         // the url to access this is /PostAdmn/Index
+
         public ActionResult Index(int? i)
         {
             return View(dbModels.Posts.ToList().ToPagedList(i ?? 1, 5));
@@ -162,8 +164,8 @@ namespace GemspaceBlog.Controllers
                 Post post = new Post();
                 if (editViewModel.Image1File == null && editViewModel.Image2File == null)
                 {
-                    post.Img1Path = (string)TempData["img1Path"];//editVMTemp.Img1Path;
-                    post.Img2Path = (string)TempData["img2Path"];// = post.Img2Path;  editVMTemp.Img2Path;
+                    post.Img1Path = (string)TempData["img1Path"];
+                    post.Img2Path = (string)TempData["img2Path"];
                     post.CreatedAt = (DateTime)TempData["datetime"];
                     post.Id = editViewModel.Id;
                     post.ShortDescription = editViewModel.ShortDescription;

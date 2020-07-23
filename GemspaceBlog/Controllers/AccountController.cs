@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace GemspaceBlog.Controllers
 {
@@ -19,26 +20,19 @@ namespace GemspaceBlog.Controllers
         public ActionResult Login(Login login)
         {
             ScryptEncoder encoder = new ScryptEncoder();
-            Login loginregister = new Login();
-            loginregister.UserName = "Xhemi";
-            loginregister.Password = encoder.Encode("Xhema2297");
-            loginEntity.Logins.Add(loginregister);
-            loginEntity.SaveChanges();
 
-            Login loginDb = loginEntity.Logins.Where(x => x.UserName == login.UserName).FirstOrDefault();
+            var loginDb = loginEntity.Logins.Where(x => x.UserName == login.UserName).SingleOrDefault();
 
-            return RedirectToAction("Index", "PostAdmn");
-        }
+            bool isValid = encoder.Compare(login.Password, loginDb.Password);
+            if (isValid)
+            {
+                FormsAuthentication.SetAuthCookie(login.UserName, false);
+                string ReturnUrl = "/PostAdmn/Index";
+                return Redirect(ReturnUrl);
 
-        public ActionResult SaveDb()
-        {
-            ScryptEncoder encoder = new ScryptEncoder();
-            Login loginregister = new Login();
-            loginregister.UserName = "Xhemi";
-            loginregister.Password = encoder.Encode("Xhema2297");
-            loginEntity.Logins.Add(loginregister);
-            loginEntity.SaveChanges();
-            return RedirectToAction("Index", "PostAdmn");
+            }
+
+            return View();
 
         }
     }
